@@ -4,6 +4,7 @@ let filter;
 let itscancelBtn;
 let itsName;
 let clearBtn;
+let globalData;
 const initializer = async function () {
   try {
     // fetch("./static-job-listings-master/data.json")
@@ -18,17 +19,28 @@ const initializer = async function () {
     }
     data = await response.json();
     globalData = data;
-    const SingerUser = data.map((user) => {
-      return createNewUser(user);
+
+    // const SingerUser = data.map((user) => {
+    //   return createNewUser(user);
+    // });
+
+    const filter = data.filter((each) => {
+      console.log(each.languages);
+
+      console.log(each.languages.includes("Javascript"));
+
+      return !each.languages.includes("Javascript");
+      // ||
+      // each.tools.includes("Javascript")
     });
-    return data;
+
+    console.log(filter);
   } catch (error) {
     console.log(error);
   }
 };
 window.addEventListener("DOMContentLoaded", async () => {
   const data = await initializer();
-  console.log(data);
   const AllrightSectionSelect = document.querySelectorAll(".right-section");
   console.log(AllrightSectionSelect);
 
@@ -71,16 +83,16 @@ function createNewUser(user) {
     }
 
     const eachContent = document.createElement("div");
-    eachContent.className = "eachContent flex gap-1";
+    eachContent.className = "eachContent flex gap-0.5";
 
     itsName = document.createElement("p");
     itsName.className =
-      "itsname bg-purple-100 text-[8px] hover:cursor-pointer rounded-sm font-semibold text-purple-500 hover:font-medium flex justify-center items-center leading-none";
+      "itsname bg-purple-100 text-[8px] hover:cursor-pointer rounded-sm font-semibold text-purple-500 hover:font-medium flex justify-center items-center leading-none p-1";
     itsName.textContent = `${filter}`;
 
     itscancelBtn = document.createElement("span");
     itscancelBtn.className =
-      " itscancelBtn bg-purple-100 text-500 text-center rounded-sm font-semibold hover:bg-purple-700 hover:cursor-pointer hover:text-white text-purple-600 hover:font flex justify-center items-center transition-all duration-200 ease-in";
+      " itscancelBtn bg-purple-100 text-500 text-center rounded-sm font-semibold hover:bg-purple-700 hover:cursor-pointer hover:text-white text-purple-600 hover:font flex justify-center items-center transition-all duration-200 ease-in p-1";
     itscancelBtn.textContent = `x`;
 
     const children = [itsName, itscancelBtn];
@@ -101,10 +113,6 @@ function createNewUser(user) {
   }
 
   content.addEventListener("click", clickedFunction);
-
-  const rightSection = document.createElement("div");
-  rightSection.className =
-    "right-section text-center items-center justify-center h-[100%] p-2.5";
 
   content.innerHTML += `<div
         class="content shadow-md justify-between flex max-[400px]:flex-col mx-3 mt-[30px] rounded-sm border-l-2 border-l-gray-500 bg-white items-center"
@@ -181,9 +189,39 @@ function createNewUser(user) {
           >`;
             })
             .join("")}
-
-        </div>
-      </div>`;
+            
+            </div>
+            </div>`;
 
   workplace.appendChild(content);
 }
+
+const all = [
+  "Frontend",
+  "Junior",
+  "JavaScript",
+  "React",
+  "Sass",
+  "Frontend",
+  "Junior",
+  "JavaScript",
+  "React",
+  "Sass",
+  "Sass",
+  "Fullstack",
+  "Midweight",
+  "Python",
+  "React",
+  "Frontend",
+  "Junior",
+  "JavaScript",
+  "React",
+  "Sass",
+  "Fullstack",
+  "Midweight",
+  "JavaScript",
+  "Python",
+  "Django",
+];
+
+const unique = [...new Set(all)];
